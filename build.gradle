@@ -1,0 +1,47 @@
+plugins {
+
+    id "org.jruyi.osgibnd" version "0.5.0"
+}
+
+
+sourceCompatibility = '1.8'
+version = '0.1'
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.dotcms.com/artifactory/libs-release" }
+    maven { url "http://repo.dotcms.com/artifactory/libs-snapshot-local" }
+}
+
+configurations {
+    pluginLibs
+    osgiLibs
+}
+
+dependencies {
+    compile ('com.dotcms:dotcms:4.2.0'){ transitive = true }
+
+
+
+    
+}
+
+jar {
+    manifest {
+        attributes (
+            'Bundle-Activator': 'com.dotcms.plugin.cache.Activator',
+
+            'Import-Package': '''
+				com.dotmarketing.business.*
+				com.dotmarketing.db.*,
+				com.dotmarketing.business.cache.provider.*
+        	''',
+        	'DynamicImport-Package' :  '*',
+
+        )
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0.2'
+}
