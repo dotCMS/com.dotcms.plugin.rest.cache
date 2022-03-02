@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    compile ('com.dotcms:dotcms:5.2.0'){ transitive = true }
+    compile ('com.dotcms:dotcms:5.3.8'){ transitive = true }
 }
 
 
@@ -23,9 +23,9 @@ jar {
     manifest {
         attributes (
                 'Bundle-Vendor': 'dotCMS',
-                'Bundle-Description': 'dotCMS - App Prerender',
+                'Bundle-Description': 'dotCMS - Cache Resource',
                 'Bundle-DocURL': 'https://dotcms.com/',
-                'Bundle-Activator': 'com.dotcms.prerender.Activator',
+                'Bundle-Activator': 'com.dotcms.plugin.cache.Activator',
                 'Import-Package': '*;version=0'
         )
     }
@@ -37,8 +37,8 @@ jar.finalizedBy 'fragmentJar'
 /////////////////////////
 
 ext {
-    bundleName = "dotCMS - App Prerender fragment"
-    bundleDescription = "dotCMS - App Prerender fragment"
+    bundleName = "dotCMS - Cache fragment"
+    bundleDescription = "dotCMS - Cache fragment"
     fragmentHost = "system.bundle; extension:=framework"
     bundleSymbolicName = "" //Auto generated based on the plugin jar
     bundleVersion = "" //Auto generated based on the plugin jar

@@ -11,7 +11,7 @@ public class Activator extends GenericBundleActivator {
 	Class[] clazzes = { CacheResource.class };
 
 	public void start(BundleContext context) throws Exception {
-		RestServiceUtil.reloadRest();
+
 		for (Class clazz : clazzes) {
 			Logger.info(this.getClass(), "Adding new Restful Service:" + clazz.getSimpleName());
 			RestServiceUtil.addResource(clazz);
@@ -26,7 +26,7 @@ public class Activator extends GenericBundleActivator {
 			RestServiceUtil.removeResource(clazz);
 
 		}
-		RestServiceUtil.reloadRest();
+
 	}
 
 }
