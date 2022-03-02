@@ -129,6 +129,27 @@ public class CacheResource {
     return responseBuilder.build();
   }
 
+
+  @NoCache
+  @GET
+  @Path("/provider/{provider: .*}/objects/{group: .*}")
+  @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
+  public Response showObjects(@Context final HttpServletRequest request,
+                              @Context final HttpServletResponse response,
+                              @PathParam("provider") final String provider,
+                              @PathParam("group") final String group) {
+
+
+
+    final Set<String> keys = this.getProvider(provider, group).getKeys(group);
+    final Map<String, Object> objectMap = new TreeMap<>();
+    for (final String key : keys) {
+
+      final Object obj = this.getProvider(provider, group).get(group, key);
+      objectMap.put(key, obj == null? "NOPE" : obj);
+    }
+    return Response.ok(new ResponseEntityView(objectMap)).build();
+  }
   
   @NoCache
   @GET
@@ -154,5 +175,20 @@ public class CacheResource {
     getProvider(provider, group).remove(group, id);
     final Response.ResponseBuilder responseBuilder = Response.ok("flushed");
     return responseBuilder.build();
+  }
+
+  @NoCache
+  @DELETE
+  @Path("/provider/{provider: .*}/flush")
+  @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
+  public Response flushAll(@Context final HttpServletRequest request,
+                           @Context final HttpServletResponse response,
+                           @PathParam("provider") final String provider) {
+
+    
+    Logger.debug(this, ()-> "Deletes all objects on  cache provider = " + provider);
+
+    MaintenanceUtil.flushCache();
+    return Response.ok(new ResponseEntityView("flushed all")).build();
   }
 }
