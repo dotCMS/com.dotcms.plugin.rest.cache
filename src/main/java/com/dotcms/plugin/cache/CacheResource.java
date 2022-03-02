@@ -135,8 +135,7 @@ public class CacheResource {
     Set<String> keys = new HashSet<>();
     keys.addAll(getProvider(provider, group).getKeys(group));
 
-    JSONArray jo = new JSONArray(keys);
-    final Response.ResponseBuilder responseBuilder = Response.ok(jo.toString());
+    final Response.ResponseBuilder responseBuilder = Response.ok(keys);
     return responseBuilder.build();
   }
 
