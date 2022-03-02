@@ -87,11 +87,22 @@ public class CacheResource {
 
   }
 
+  @NoCache
+  @GET
+  @Path("/test")
+  public Response test(@Context final HttpServletRequest request,
+      @Context final HttpServletResponse response, @PathParam("group") final String group) {
+
+    final Response.ResponseBuilder responseBuilder = Response.ok("plugin-installed");
+    return responseBuilder.build();
+  }
+
 
 
   @NoCache
   @GET
   @Path("/providers/{group: .*}")
+  @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
   public Response showProviders(@Context final HttpServletRequest request,
       @Context final HttpServletResponse response, @PathParam("group") final String group) {
 
@@ -103,6 +114,7 @@ public class CacheResource {
   @NoCache
   @GET
   @Path("/provider/{provider: .*}/{group: .*}")
+  @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
   public Response showProviders(@Context final HttpServletRequest request,
       @Context final HttpServletResponse response, @PathParam("provider") final String provider, @PathParam("group") final String group) {
 
@@ -115,6 +127,7 @@ public class CacheResource {
   @NoCache
   @GET
   @Path("/provider/{provider: .*}/keys/{group: .*}")
+  @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
   public Response getKeys(@Context final HttpServletRequest request,
       @Context final HttpServletResponse response, @PathParam("provider") final String provider,  @PathParam("group") final String group) {
 
@@ -130,6 +143,7 @@ public class CacheResource {
   @NoCache
   @GET
   @Path("/provider/{provider: .*}/object/{group: .*}/{id: .*}")
+  @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
   public Response showObject(@Context final HttpServletRequest request,
       @Context final HttpServletResponse response,@PathParam("provider") final String provider,  @PathParam("group") final String group,
       @PathParam("id") final String id) {
@@ -168,6 +182,7 @@ public class CacheResource {
   @NoCache
   @GET
   @Path("/provider/{provider: .*}/flush/{group: .*}")
+  @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
   public Response flushGroup(@Context final HttpServletRequest request,
       @Context final HttpServletResponse response, @PathParam("provider") final String provider,  @PathParam("group") final String group) {
 
@@ -183,6 +198,7 @@ public class CacheResource {
   @NoCache
   @GET
   @Path("/provider/{provider: .*}/flush/{group: .*}/{id: .*}")
+  @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
   public Response flushObject(@Context final HttpServletRequest request,
       @Context final HttpServletResponse response,@PathParam("provider") final String provider,  @PathParam("group") final String group,
       @PathParam("id") final String id) {
@@ -194,6 +210,7 @@ public class CacheResource {
   @NoCache
   @DELETE
   @Path("/provider/{provider: .*}/flush")
+  
   @Produces({MediaType.APPLICATION_JSON, "application/javascript"})
   public Response flushAll(@Context final HttpServletRequest request,
                            @Context final HttpServletResponse response,
