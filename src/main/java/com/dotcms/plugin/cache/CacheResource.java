@@ -43,6 +43,8 @@ public class CacheResource {
   private Method method = null;
   private CacheProviderAPIImpl providerAPI = null;
 
+
+
   private final List<CacheProvider> getProviders(final String group) {
 
     if (providerAPI == null) {
@@ -51,7 +53,13 @@ public class CacheResource {
         method = providerAPI.getClass().getMethod("getProvidersForRegion", new Class[] {String.class});
         method.setAccessible(true);
       } catch (NoSuchMethodException | SecurityException e) {
-        throw new DotStateException(e);
+        try {
+
+          method = providerAPI.getClass().getDeclaredMethod("b", new Class[] {String.class});
+          method.setAccessible(true);
+        } catch (NoSuchMethodException | SecurityException ex) {
+          throw new DotStateException(ex);
+        }
       }
     }
 
